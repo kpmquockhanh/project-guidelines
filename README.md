@@ -37,88 +37,90 @@ If you want to share a best practice, or think one of these guidelines should be
 <a name="some-git-rules"></a>
 
 ### 1.1 Some Git rules
-There are a set of rules to keep in mind:
-* Perform work in a feature branch.
+Đây là một bộ quy tắc để ghi nhớ:
+* Thực hiện công việc trong một chi nhánh đặc trưng.
+    
+    _Tại sao:_
+    >Bởi vì theo cách này tất cả công việc được thực hiện trên một nhánh đặc trưng thay vì nhánh chính. NÓ cho phép bạn gửi nhiều pull request mà không bị nhầm lẫn. Bạn có thể lặp mà không làm rối nhánh chính với những code chưa hoàn thành có nguy cơ không ổn định. [đọc thêm...](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow)
+* Phát triển nhánh từ `develop`
+    
+    _Tại sao:_
+    >Bằng cách này, bạn có thể chắc chắn rằng code trong nhánh master sẽ hầu như được build mà không có lỗi, và có thể được sử dụng trực tiếp co bản phát hành (Điều này có thể quá sức đối với một vài dự án).
+
+* Không bao giờ push vào nhánh `develop` hoặc `master`. Hãy tạo một pull request.
+    
+    _Tại sao:_
+    > Nó thông báo cho thành viên của nhóm rằng chúng ta vừa hoàn thành một tính năng. Nó cho phép dẽ dàng bình duyệt lại mã và đưa ra diễn đàn thảo luận về tính năng được đề xuất.
+
+* Cập nhật nhánh `develop` trên local và thực hiện một tương tác rebase trước khi push tính năng của bạn và tạo một Pull Request.
+
+    _Tại sao:_
+    > Rebase sẽ gộp vào nhánh được yêu cầu (`master` hoặc `develop`) và áp dụng các commit cái mà bạn đã tạo tại local lên đầu của lịch sử mà không tạo ra một merge commit (giả sử không có xung đột). Kết quả là một lịch sử tốt và rõ ràng. [ đọc thêm ...](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)
+
+* Xử lí xung đột tiềm năng trong khi rebase và trước khi tạo một Pull request.
+* Xoá tính năng trên local và remote sau khi nhánh được merge.
+    
+    _Tại sao:_
+    > Nó sẽ làm lẫn lộn danh sách nhánh của bạn với các nhánh chết. Nó đảm bảo bạn không bao giờ merge nhánh (`master` or `develop`) trở lại. Các nhánh đặc trưng chỉ nên tồn tại trong khi công việc vẫn đang trong tiến trình.
+
+* Trước khi tạo một Pull Request, đẩm bảo rằng nhánh đặc trưng của bạn build thành công và qua tất cả các bài kiểm tra (bao gồm cả cách trình bày code).
+    
+    _Tại sao:_
+    > Bạn chuẩn bị thêm code vào một nhánh ổn định.Nếu nhánh tính năng của bạn fail,Thì tỉ lệ cao nhánh đích của bạn cũng fail. Additionally, you need to apply code style check before making a Pull Request. It aids readability and reduces the chance of formatting fixes being mingled in with actual changes.
+Ngoài ra, bạn cần áp dụng kiểm tra kiểu mã trước khi thực hiện một Pull Rrequest. Nó giúp dễ đọc và giảm tỉ lệ định dạng các bản sửa lỗi được trộn lẫn với những thay đổi thực tế.
+
+* Sử dụng [cái này](./.gitignore) `.gitignore` file.
     
     _Why:_
-    >Because this way all work is done in isolation on a dedicated branch rather than the main branch. It allows you to submit multiple pull requests without confusion. You can iterate without polluting the master branch with potentially unstable, unfinished code. [read more...](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow)
-* Branch out from `develop`
-    
-    _Why:_
-    >This way, you can make sure that code in master will almost always build without problems, and can be mostly used directly for releases (this might be overkill for some projects).
+    > Nó là một danh sách các file hệ thống không nên được gửi với code của bạn vào remote repo. Ngoài ra nó loại trừ các thư mục cài đặt và các file hầu như chỉ dùng cho các editor,cũng như các thư mục phổ biến nhất.
 
-* Never push into `develop` or `master` branch. Make a Pull Request.
-    
-    _Why:_
-    > It notifies team members that they have completed a feature. It also enables easy peer-review of the code and dedicates forum for discussing the proposed feature.
-
-* Update your local `develop` branch and do an interactive rebase before pushing your feature and making a Pull Request.
-
-    _Why:_
-    > Rebasing will merge in the requested branch (`master` or `develop`) and apply the commits that you have made locally to the top of the history without creating a merge commit (assuming there were no conflicts). Resulting in a nice and clean history. [read more ...](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)
-
-* Resolve potential conflicts while rebasing and before making a Pull Request.
-* Delete local and remote feature branches after merging.
-    
-    _Why:_
-    > It will clutter up your list of branches with dead branches. It ensures you only ever merge the branch back into (`master` or `develop`) once. Feature branches should only exist while the work is still in progress.
-
-* Before making a Pull Request, make sure your feature branch builds successfully and passes all tests (including code style checks).
-    
-    _Why:_
-    > You are about to add your code to a stable branch. If your feature-branch tests fail, there is a high chance that your destination branch build will fail too. Additionally, you need to apply code style check before making a Pull Request. It aids readability and reduces the chance of formatting fixes being mingled in with actual changes.
-
-* Use [this](./.gitignore) `.gitignore` file.
-    
-    _Why:_
-    > It already has a list of system files that should not be sent with your code into a remote repository. In addition, it excludes setting folders and files for most used editors, as well as most common dependency folders.
-
-* Protect your `develop` and `master` branch.
+* Bảo vệ nhánh `develop` và `master` của bạn.
   
-    _Why:_
-    > It protects your production-ready branches from receiving unexpected and irreversible changes. read more... [Github](https://help.github.com/articles/about-protected-branches/), [Bitbucket](https://confluence.atlassian.com/bitbucketserver/using-branch-permissions-776639807.html) and [GitLab](https://docs.gitlab.com/ee/user/project/protected_branches.html)
+    _Tại sao:_
+
+    > Nó bảo vệ các nhánh sẵn sàng từ các thay đổi không mong muốn và không thể đảo ngược. đọc thêm ... [Github](https://help.github.com/articles/about-protected-branches/), [Bitbucket](https://confluence.atlassian.com/bitbucketserver/using-branch-permissions-776639807.html) và [GitLab](https://docs.gitlab.com/ee/user/project/protected_branches.html)
 
 <a name="git-workflow"></a>
-### 1.2 Git workflow
-Because of most of the reasons above, we use [Feature-branch-workflow](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow) with [Interactive Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing) and some elements of [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow) (naming and having a develop branch). The main steps are as follows:
+### 1.2 Quy trình làm việc Git
+Vì hầu hết các lí do trên, chúng ta sử dụng [Quy trình làm việc với các nhánh tính năng](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow) với [Tương tác Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing) và một vài phần tử của [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows#gitflow-workflow) (đặt tên và có một nhánh phát triển). Các bước chính như sau:
 
-* For a new project, initialize a git repository in the project directory. __For subsequent features/changes this step should be ignored__.
+* Đối với dự án mới, khởi tạo một repo git trong thư mục của dự án. __Đối với các tính năng / thay đổi tiếp theo, bước này nên được bỏ qua__.
    ```sh
    cd <project directory>
    git init
    ```
 
-* Checkout a new feature/bug-fix branch.
+* Kiểm tra một nhánh tính năng/sửa lỗi mới.
     ```sh
     git checkout -b <branchname>
     ```
-* Make Changes.
+* Thay đổi.
     ```sh
     git add
     git commit -a
     ```
     _Why:_
-    > `git commit -a` will start an editor which lets you separate the subject from the body. Read more about it in *section 1.3*.
+    > `git commit -a` sẽ bắt đầu một trình soạn thảo cho phép bạn tách đối tượng ra khỏi body. Đọc thêm về nó trong *section 1.3*.
 
-* Sync with remote to get changes you’ve missed.
+* Đồng bộ với remote để lấy những thay đổi bạn đã bỏ lỡ.
     ```sh
     git checkout develop
     git pull
     ```
     
-    _Why:_
-    > This will give you a chance to deal with conflicts on your machine while rebasing (later) rather than creating a Pull Request that contains conflicts.
+    _Tại sao:_
+    > TĐiều này sẽ cho bạn cơ hội để đối phó với các xung đột trên máy tính của bạn trong khi rebasing (sau đó) thay vì tạo một Pull Request có chứa xung đột.
     
-* Update your feature branch with latest changes from develop by interactive rebase.
+* Cập nhật nhánh tính năng của bạn với những thay đổi mới nhất từ phát triển bằng cách tương tác rebase.
     ```sh
     git checkout <branchname>
     git rebase -i --autosquash develop
     ```
     
-    _Why:_
-    > You can use --autosquash to squash all your commits to a single commit. Nobody wants many commits for a single feature in develop branch. [read more...](https://robots.thoughtbot.com/autosquashing-git-commits)
+    _Tại sao:_
+    > Bạn có thể sử dụng --autosquash để làm lại tất cả các cmmit của bạn thành một commit duy nhất.Không ai muốn có quá nhiều commit cho  một tính năng trogn nhánh phát triển. [đọc thêm...](https://robots.thoughtbot.com/autosquashing-git-commits)
     
-* If you don’t have conflicts, skip this step. If you have conflicts, [resolve them](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/)  and continue rebase.
+* Nếu bạn không có xung đột, bỏ qua bước này. Nếu ban jcos xung đột, [giải quyết chúng](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/) và tiếp tục rebase.
     ```sh
     git add <file1> <file2> ...
     git rebase --continue
