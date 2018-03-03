@@ -41,11 +41,11 @@ If you want to share a best practice, or think one of these guidelines should be
 * Thực hiện công việc trong một chi nhánh đặc trưng.
     
     _Tại sao:_
-    >Bởi vì theo cách này tất cả công việc được thực hiện trên một nhánh đặc trưng thay vì nhánh chính. NÓ cho phép bạn gửi nhiều pull request mà không bị nhầm lẫn. Bạn có thể lặp mà không làm rối nhánh chính với những code chưa hoàn thành có nguy cơ không ổn định. [đọc thêm...](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow)
+    >Bởi vì theo cách này tất cả công việc được thực hiện trên một nhánh đặc trưng thay vì nhánh chính. NÓ cho phép bạn gửi nhiều pull request mà không bị nhầm lẫn. Bạn có thể lặp với những code chưa hoàn thành có nguy cơ không ổn định mà không làm rối nhánh chính. [đọc thêm...](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow)
 * Phát triển nhánh từ `develop`
     
     _Tại sao:_
-    >Bằng cách này, bạn có thể chắc chắn rằng code trong nhánh master sẽ hầu như được build mà không có lỗi, và có thể được sử dụng trực tiếp co bản phát hành (Điều này có thể quá sức đối với một vài dự án).
+    >Bằng cách này, bạn có thể chắc chắn rằng code trong nhánh master sẽ hầu như được build mà không có lỗi, và có thể được sử dụng trực tiếp cho bản phát hành (Điều này có thể quá sức đối với một vài dự án).
 
 * Không bao giờ push vào nhánh `develop` hoặc `master`. Hãy tạo một pull request.
     
@@ -120,70 +120,71 @@ Vì hầu hết các lí do trên, chúng ta sử dụng [Quy trình làm việc
     _Tại sao:_
     > Bạn có thể sử dụng --autosquash để làm lại tất cả các cmmit của bạn thành một commit duy nhất.Không ai muốn có quá nhiều commit cho  một tính năng trogn nhánh phát triển. [đọc thêm...](https://robots.thoughtbot.com/autosquashing-git-commits)
     
-* Nếu bạn không có xung đột, bỏ qua bước này. Nếu ban jcos xung đột, [giải quyết chúng](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/) và tiếp tục rebase.
+* Nếu bạn không có xung đột, bỏ qua bước này. Nếu ban có xung đột, [giải quyết chúng](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/) và tiếp tục rebase.
     ```sh
     git add <file1> <file2> ...
     git rebase --continue
     ```
-* Push your branch. Rebase will change history, so you'll have to use `-f` to force changes into the remote branch. If someone else is working on your branch, use the less destructive `--force-with-lease`.
+* Push nhánh của bạn. Rebase sẽ thay đổi lịch sử, nên bạn phải sử dụng `-f` để buộc các thay đổi vào nhánh remote. Nếu ai đó đang làm việc trên nhánh của bạn, hãy sử dụng phương pháp ít gây tổn hại hơn `--force-with-lease`.
     ```sh
     git push -f
     ```
     
     _Why:_
-    > When you do a rebase, you are changing the history on your feature branch. As a result, Git will reject normal `git push`. Instead, you'll need to use the -f or --force flag. [read more...](https://developer.atlassian.com/blog/2015/04/force-with-lease/)
+    > WKhi bạn thực hiện một rebase, bạn đang thay đổi lịch sử trên nhánh chức năng của bạn.Kết quả là, Git sẽ từ chối push một cách bình thường `git push`. Thay vì vậy, bạn sẽ cần sử dụng -f hoặc --force cờ. [đọc thêm...](https://developer.atlassian.com/blog/2015/04/force-with-lease/)
     
     
-* Make a Pull Request.
-* Pull request will be accepted, merged and close by a reviewer.
-* Remove your local feature branch if you're done.
+* Tạo một Pull Request.
+* Pull request sẽ được chấp nhận, được merge hoặc đóng bới người đánh giá.
+* Gỡ nhánh tính năng trên local của bạn nếu bạn đã hoàn thành.
 
   ```sh
   git branch -d <branchname>
   ```
-  to remove all branches which are no longer on remote
+  để gỡ tất cả các nhánh không còn trên remote
   ```sh
   git fetch -p && for branch in `git branch -vv --no-color | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done
   ```
 
 <a name="writing-good-commit-messages"></a>
-### 1.3 Writing good commit messages
+### 1.3 Viết commit tốt
 
 Having a good guideline for creating commits and sticking to it makes working with Git and collaborating with others a lot easier. Here are some rules of thumb ([source](https://chris.beams.io/posts/git-commit/#seven-rules)):
+Để có một hướng dẫn tốt cho việc tạo các commit và stichking để làm cho việc làm việc với Git và cộng tác với người khác dễ dàng hơn rất nhiều. Sau đây là một vài luật chính ([nguồn](https://chris.beams.io/posts/git-commit/#seven-rules)):
 
- * Separate the subject from the body with a newline between the two.
+ * Tách đối tượng từ thân với một dòng mới ở giữa 2 phần.
 
-    _Why:_
-    > Git is smart enough to distinguish the first line of your commit message as your summary. In fact, if you try git shortlog, instead of git log, you will see a long list of commit messages, consisting of the id of the commit, and the summary only.
+    _Tại sao:_
+    > Git đủ thông minh để phân biệt dòng đầu tiên commit dưới dạng tóm tắt của bạn. Thực tế, nếu bạn thử git shortlog, thay vì git log, bạn sẽ thấy một danh sách commit dài. bao gồm cả id của commit, và chỉ bản tổng hợp. 
 
- * Limit the subject line to 50 characters and Wrap the body at 72 characters.
+ * Giới hạn là 50 với chủ đề vào 75 với nội dung.
 
     _why_
-    > Commits should be as fine-grained and focused as possible, it is not the place to be verbose. [read more...](https://medium.com/@preslavrachev/what-s-with-the-50-72-rule-8a906f61f09c)
+    > Các commit snên được mịn và tập trung nhất có thể, nó không phải là nơi được rườm rà. [đọc thêm...](https://medium.com/@preslavrachev/what-s-with-the-50-72-rule-8a906f61f09c)
 
- * Capitalize the subject line.
- * Do not end the subject line with a period.
- * Use [imperative mood](https://en.wikipedia.org/wiki/Imperative_mood) in the subject line.
+ * Tận dụng chủ đề.
+ * Không kết thúc chủ đề với một khoảng thòi gian.
+ * Sử dụng [câu mệnh lệnh](https://en.wikipedia.org/wiki/Imperative_mood) trong chủ đề.
 
-    _Why:_
-    > Rather than writing messages that say what a committer has done. It's better to consider these messages as the instructions for what is going to be done after the commit is applied on the repository. [read more...](https://news.ycombinator.com/item?id=2079612)
+    _Tại sao:_
+    > Thay vì viết một tin nhắn nói rằng một commiter đã hoàn thành. Tốt hơn nên xem các thông báo này như là hướng dẫn cho những gì sẽ được thực hiện sau khi commit được áp dụng trên repo. [đọc thêm...](https://news.ycombinator.com/item?id=2079612)
 
 
  * Use the body to explain **what** and **why** as opposed to **how**.
 
  <a name="documentation"></a>
-## 2. Documentation
+## 2. Tài liệu
 
-![Documentation](/images/documentation.png)
+![Tài liệu](/images/documentation.png)
 
-* Use this [template](./README.sample.md) for `README.md`, Feel free to add uncovered sections.
-* For projects with more than one repository, provide links to them in their respective `README.md` files.
-* Keep `README.md` updated as a project evolves.
-* Comment your code. Try to make it as clear as possible what you are intending with each major section.
-* If there is an open discussion on github or stackoverflow about the code or approach you're using, include the link in your comment. 
-* Don't use comments as an excuse for a bad code. Keep your code clean.
-* Don't use clean code as an excuse to not comment at all.
-* Keep comments relevant as your code evolves.
+* Sử dụng [mẫu này](./README.sample.md) cho `README.md`, Bạn có thể thêm các phần được để trống.
+* Đối với các dự án có nhiều hơn một repo, cung cấp liên kết tới chúng trong các tệp `README.md` của chúng.
+* Giữ cho `README.md` được cập nhật như là một dự án phát triển.
+* Chú thích code của bạn. Cố gắng làm cho nó càng rõ ràng càng tốt những gì bạn đang có ý định với mỗi phần chính.
+* Nếu có một cuộc thảo luận trên github hoặc stackoverflow về code hoặc cách tiếp cận mà bạn đang sử dụng, hãy bao gồm liên kết trong chú thích của bạn. 
+* Đừng sử dụng chú thích như một cái cớ cho đoạn code xấu. Hãy giữ cho code của bạn luôn rõ ràng.
+* Đừng sử dụng một đoạn code rõ ràng làm cái cớ để bạn không chú thích một cái gì.
+* Giữ lại các chú thích có liên quan khi code của bạn phát triển.
 
 <a name="environments"></a>
 ## 3. Environments
