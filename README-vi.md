@@ -290,36 +290,36 @@ Having a good guideline for creating commits and sticking to it makes working wi
 * Có một môi trường `test` nếu cần.
 
 _Tại sao:_ 
-    > Trong khi thỉnh thoảng end to end testing trong chế độ `production` mode có thể dường như là đủ , vẫn có một số trường hợp ngoại lệ: Một ví dụ là bạn có thể không muốn cho phép phân tích thông tin trên một chế độ 'production' và xấu bảng điều khiển của ai đó với dữ liệu test. Ví dụ khác là API của bạn có thể đạt tới tỉ lệ gới hạn trong chế độ `production` và bị khoá lời gọi test của bạn sau một lượng request nhất định. 
+    > Trong khi thỉnh thoảng end to end testing trong chế độ `production` mode có thể dường như là đủ , vẫn có một số trường hợp ngoại lệ: Một ví dụ là bạn có thể không muốn cho phép phân tích thông tin trên một chế độ 'production' và làm xấu bảng điều khiển của ai đó với dữ liệu test. Ví dụ khác là API của bạn có thể đạt tới tỉ lệ gới hạn trong chế độ `production` và khoá lời gọi test của bạn sau một lượng request nhất định. 
 
-* Đặt tên file test của bạn bên cạnh module đã được test sử dụng quy ước đặt tên `*.test.js` or `*.spec.js` , giống như `moduleName.spec.js`.
+* Đặt tên file test của bạn bên cạnh module đã được test sử dụng quy ước đặt tên `*.test.js` or `*.spec.js` , như là `moduleName.spec.js`.
 
     _Tại sao:_
-    > Bạn không muốn lục cả cấu trúc thư mick để tìm một unit test. [Đọc thêm...](https://hackernoon.com/structure-your-javascript-code-for-testability-9bc93d9c72dc)
+    > Bạn không muốn lục cả cấu trúc thư mục để tìm một unit test. [Đọc thêm...](https://hackernoon.com/structure-your-javascript-code-for-testability-9bc93d9c72dc)
     
 
 * Đặt các file test bổ sung vào thư mục test riêng để tránh nhầm lẫn.
 
     _Tại sao:_
-    > Một vài file test không có sự liên quan đặc biệt để bất kỳ file được thực hiện đặc biệt. Bạn phải đặt nó vào trong một thư mục nơi mà có thể tìm được bởi các developer khác.: thư mục `__test__` . Tên này: `__test__`  cũng là chuẩn bây giờ và được chọn bởi ccacs thư viện Javascript testing.
+    > Một vài file test không có sự liên quan đặc biệt để bất kỳ file được thực hiện đặc biệt. Bạn phải đặt nó vào trong một thư mục nơi mà có thể tìm được bởi các developer khác.: thư mục `__test__` . Tên này: `__test__`  cũng là chuẩn bây giờ và được chọn bởi các framework kiểm thử Javascript.
 
 * Viết code có thể test được, tránh các ảnh hưởng phụ, các ảnh hưởng mở rộng, viết các hàm thuần tuý.
 
     _Tại sao:_
-    > Bạn muốn kiểm tra một luồn làm việc logic như tách thành các phần riêng biệt. Bạn phải "giảm thiểu sự xung đột giữa tiến trình ngẫu nhiên và không ngẫu nhiên trên độ tin cậy code của bạn". [xem thêm...](https://medium.com/javascript-scene/tdd-the-rite-way-53c9b46f45e3)
+    > Bạn muốn kiểm tra một luồn làm việc logic như tách thành các phần riêng biệt. Bạn phải "giảm thiểu sự xung đột giữa tiến trình ngẫu nhiên và không xác định trên độ tin cậy code của bạn". [xem thêm...](https://medium.com/javascript-scene/tdd-the-rite-way-53c9b46f45e3)
     
     > Một hàm thuần tuý là một hàm mà luôn luôn trả về đầu ra tương tự khi cho đầu vào tương tự. Ngược lại, một hàm xấu là một hàm mà trong đó có thể có các ảnh hưởng phụ hoặc phụ thuộc điều kiện bên ngoài để tạo ra giá trị. Điều đó làm cho nó khó dự đoán. [xem thêm...](https://hackernoon.com/structure-your-javascript-code-for-testability-9bc93d9c72dc)
 
 * Dùng một bộ kiểm tra kiểu tĩnh.
 
     _Tại sao:_
-    > Thỉnh thoảng bạn có thể cần một bộ kiểm tra kiểu tĩnh. Nó đem đến các mức độ chắc chắc cho độ tin tưởng code của bạn. [đọc thêm...](https://medium.freecodecamp.org/why-use-static-types-in-javascript-part-1-8382da1e0adb)
+    > Thỉnh thoảng bạn có thể cần một bộ kiểm tra kiểu tĩnh. Nó đem đến một mức độ tin cậy nhất định cho code của bạn. [đọc thêm...](https://medium.freecodecamp.org/why-use-static-types-in-javascript-part-1-8382da1e0adb)
 
 
-* Chạy test ở dưới máy trước khi thực hiện bất kì các pull request nào về `develop`.
+* Chạy test ở dưới máy trước khi thực hiện bất kì pull request nào tới `develop`.
 
     _Tại sao:_
-    > Bạn không muốn là người mà gây ra việc thất bại khi chạy một nhánh đã sẵn sàng của chế độ production. Chạy các test của bạn sau `rebase` của bạn và trước khi đẩy lên nhánh tính năng của bạn đến một remote repository.
+    > Bạn không muốn là người mà gây ra việc thất bại khi chạy một nhánh thành phẩm. Chạy các test của bạn sau `rebase` của bạn và trước khi đẩy nhánh tính năng của bạn đến một remote repository.
 
 * Tài liệu các test của bạn bao gồm các hướng dẫn trong phần liên quan của file `README.md` của bạn.
 
@@ -329,7 +329,7 @@ _Tại sao:_
 <a name="structure-and-naming"></a>
 ## 6. Kiến trúc và đặt tên
 ![Structure and Naming](/images/folder-tree.png)
-* Tổ chức các file của bạn xung quanh các tính năng / các trang / các thành phần của sản phẩm, không bắt buộc. Như vậy đặt các file test của bạn bên cạnh nơi thực hiện chúng.
+* Tổ chức các file của bạn xung quanh các tính năng / các trang / các thành phần của sản phẩm, không bắt buộc. Ngoài ra, đặt các file test của bạn bên cạnh nơi thực hiện chúng.
 
 
     **Xấu**
@@ -381,7 +381,7 @@ _Tại sao:_
 * Đặt đầu ra quá trình chạy của bạn trong một thư mục `./build`. Thêm `build/` vào `.gitignore`.
 
     _Tại sao:_
-    >Đặt tên cho những gì bạn thích, `dist` cũng giảm bớt. Nhưng đảm bảo rằng giữ nó phù hợp với nhóm của bạn. Những gì lấy được ở đó rất có thể được tạo ra  (đóng gói, biên dịch, chuyển đổi) hoặc di chuyển chúng. Những gì bạn có thể tạo ra, thì đồng đội của bạn cũng nên có thể tạo ra như thế, vì vậy không đặt vị trí commit chúng vào trong remote repository của bạn. Trừ khi bạn muốn đặc biệt.
+    >Đặt tên cho những gì bạn thích, `dist` cũng khá hay. Nhưng đảm bảo rằng giữ nó phù hợp với nhóm của bạn. Những gì lấy được ở đó rất có thể được tạo ra  (đóng gói, biên dịch, chuyển đổi) hoặc di chuyển chúng. Những gì bạn có thể tạo ra, thì đồng đội của bạn cũng nên có thể tạo ra như thế, vì vậy không đặt vị trí commit chúng vào trong remote repository của bạn. Trừ khi bạn đặc biệt muốn.
 
 <a name="code-style"></a>
 ## 7. Code style
@@ -404,7 +404,7 @@ _Tại sao:_
 * Dùng [ESLint - Pluggable JavaScript linter](http://eslint.org/) để thực hiện định dạng code.
 
     _Tại sao:_
-    > Chúng tôi chỉ đơn giản thích `eslint` hơn, bạn có thể không phải. No có nhiều quy tắc được hỗ trợ hơn, có khả năng để cấu hình những quy tắc đó, và có khả năng thêm các quy tắc tuỳ biến.
+    > Chúng tôi chỉ đơn giản thích `eslint` hơn, bạn có thể không phải. Nó có nhiều quy tắc được hỗ trợ hơn, có khả năng để cấu hình những quy tắc đó, và có khả năng thêm các quy tắc tuỳ biến.
 
 * Chúng tôi sử dụng [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) cho JavaScript, [Xem thêm](https://www.gitbook.com/book/duk/airbnb-javascript-guidelines/details). Sử dụng hướng dẫn javascript style được yêu cầu bở dự án hoặc nhóm của bạn.
 
